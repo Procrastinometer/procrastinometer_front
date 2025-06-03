@@ -111,6 +111,10 @@
         </div>
       </section>
 
+      <div class="image-standalone">
+        <img src="/pony.png" alt="Pony PNG" class="image-center" />
+      </div>
+
       <hr class="divider" />
 
       <footer class="footer">
