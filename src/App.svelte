@@ -5,11 +5,13 @@
   import Dashboard from './routes/Dashboard.svelte';
   import NotFound from './routes/NotFound.svelte';
   import Projects from "./routes/Projects.svelte";
+  import Day from "./routes/Day.svelte";
 
   const routes = {
     '/': Dashboard,
     '/dashboard': Dashboard,
     '/projects': Projects,
+    '/day': Day,
 
     '*': NotFound,
   };
