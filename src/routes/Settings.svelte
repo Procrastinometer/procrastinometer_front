@@ -1,13 +1,12 @@
 <script>
-    let preferences = {
-        darkMode: false,
-        emailNotifications: true,
-        dailySummary: false
-    };
+    import { theme } from '../stores/settingsStore.js';
 
-    function toggle(setting) {
-        preferences[setting] = !preferences[setting];
+    function toggleTheme() {
+        theme.update(currentValue => (currentValue === 'light' ? 'dark' : 'light'));
     }
+
+    let emailNotifications = true;
+    let dailySummary = false;
 </script>
 
 <div class="settings-page">
@@ -18,69 +17,88 @@
         <div class="setting-row">
             <span>Dark Mode</span>
             <label class="toggle">
-                <input type="checkbox" bind:checked={preferences.darkMode} on:change={() => toggle('darkMode')} />
+                <input
+                    type="checkbox"
+                    checked={$theme === 'dark'}
+                    on:change={toggleTheme}
+                />
                 <span class="slider"></span>
             </label>
         </div>
     </div>
 
     <div class="section">
-        <h3>Notifications</h3>
+        <h3>Notifications (Mock)</h3>
         <div class="setting-row">
             <span>Email Alerts</span>
             <label class="toggle">
-                <input type="checkbox" bind:checked={preferences.emailNotifications} on:change={() => toggle('emailNotifications')} />
+                <input type="checkbox" bind:checked={emailNotifications} />
                 <span class="slider"></span>
             </label>
         </div>
         <div class="setting-row">
             <span>Daily Summary</span>
             <label class="toggle">
-                <input type="checkbox" bind:checked={preferences.dailySummary} on:change={() => toggle('dailySummary')} />
+                <input type="checkbox" bind:checked={dailySummary} />
                 <span class="slider"></span>
             </label>
         </div>
     </div>
 
-    <p class="muted">Settings are not saved yet. (Mock only)</p>
+    <p class="status-message">Theme settings are saved automatically. Other settings are for demonstration.</p>
 </div>
 
 <style>
     .settings-page {
-        max-width: 500px;
-        margin: 0 auto;
+        max-width: 550px;
+        margin: 2rem auto;
         padding: 2rem;
+        background-color: var(--color-bg-secondary);
+        border-radius: var(--radius-main);
+        box-shadow: var(--shadow-main);
     }
 
     h2 {
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
+        color: var(--color-text-primary);
+        font-size: 1.8rem;
     }
 
     .section {
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .section:last-of-type {
+        margin-bottom: 1.5rem;
     }
 
     h3 {
-        font-size: 1.1rem;
-        margin-bottom: 1rem;
-        color: #333;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        color: var(--color-text-primary);
+        border-bottom: 1px solid var(--color-border-primary);
+        padding-bottom: 0.75rem;
     }
 
     .setting-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1rem;
+        margin-bottom: 1.25rem;
         font-size: 1rem;
-        color: #444;
+        color: var(--color-text-primary);
+    }
+
+    .setting-row:last-child {
+        margin-bottom: 0;
     }
 
     .toggle {
         position: relative;
         display: inline-block;
-        width: 40px;
-        height: 22px;
+        width: 44px;
+        height: 24px;
     }
 
     .toggle input {
@@ -96,7 +114,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #ccc;
+        background-color: var(--color-bg-tertiary);
         border-radius: 34px;
         transition: 0.4s;
     }
@@ -104,26 +122,28 @@
     .slider::before {
         position: absolute;
         content: "";
-        height: 16px;
-        width: 16px;
+        height: 18px;
+        width: 18px;
         left: 3px;
         bottom: 3px;
-        background-color: white;
+        background-color: var(--color-bg-secondary);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         border-radius: 50%;
         transition: 0.4s;
     }
 
     input:checked + .slider {
-        background-color: #2563eb;
+        background-color: var(--color-accent-secondary);
     }
 
     input:checked + .slider::before {
-        transform: translateX(18px);
+        transform: translateX(20px);
     }
 
-    .muted {
+    .status-message {
         text-align: center;
-        font-size: 0.85rem;
-        color: #888;
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+        margin-top: 2rem;
     }
 </style>
