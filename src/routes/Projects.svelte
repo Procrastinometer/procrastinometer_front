@@ -19,86 +19,133 @@
     $: filteredProjects = projects.filter(p =>
         p.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    function handleActionClick(projectName) {
+        console.log("Action for project:", projectName);
+    }
 </script>
 
-<div class="projects-page">
-    <h2 class="title">Projects</h2>
+<div class="projects-list-page">
+    <header class="page-header">
+        <h2 class="page-title">Projects</h2>
+    </header>
 
     <input
-            type="text"
-            bind:value={searchQuery}
-            placeholder="Search projects..."
-            class="search-input"
+        type="text"
+        bind:value={searchQuery}
+        placeholder="Search projects..."
+        class="search-field"
     />
 
-    <ul class="project-list">
-        {#each filteredProjects as project}
-            <li class="project-item">
-                <span>{project}</span>
-                <button class="action-btn">⋮</button>
-            </li>
-        {/each}
-    </ul>
+    {#if filteredProjects.length > 0}
+        <ul class="projects-collection">
+            {#each filteredProjects as project}
+                <li class="project-entry">
+                    <span class="project-name-text">{project}</span>
+                    <button class="project-action-button" on:click={() => handleActionClick(project)} title="More actions">
+                        ⋮
+                    </button>
+                </li>
+            {/each}
+        </ul>
+    {:else}
+        <p class="no-results-message">
+            {#if projects.length === 0}
+                No projects available.
+            {:else}
+                No projects found for "{searchQuery}".
+            {/if}
+        </p>
+    {/if}
 </div>
 
 <style>
-    .projects-page {
+    .projects-list-page {
         width: 100%;
-        padding-right: 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 1rem;
     }
 
-    .title {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .search-input {
-        width: 100%;
-        padding: 0.6rem 1rem;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
+    .page-header {
         margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--color-border-primary);
+    }
+    .page-title {
+        font-size: 1.8rem;
+        color: var(--color-text-primary);
+        margin: 0;
+    }
+
+    .search-field {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        border: 1px solid var(--color-border-input);
+        border-radius: var(--radius-small);
+        margin-bottom: 2rem;
         outline: none;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+        background-color: var(--color-bg-secondary);
+        color: var(--color-text-primary);
+        box-shadow: var(--shadow-main);
+    }
+    .search-field:focus {
+        border-color: var(--color-border-input-focus);
+        box-shadow: 0 0 0 3px var(--shadow-input-focus), var(--shadow-hover);
+    }
+    .search-field::placeholder {
+        color: var(--color-text-secondary);
     }
 
-    .search-input:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
-    }
-
-    .project-list {
+    .projects-collection {
         list-style: none;
         padding: 0;
         margin: 0;
     }
 
-    .project-item {
+    .project-entry {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.75rem 1rem;
-        border-bottom: 1px solid #eee;
-        background: white;
-        transition: background 0.2s ease;
-        border-radius: 6px;
-        margin-bottom: 0.3rem;
+        padding: 0.85rem 1.25rem;
+        border-bottom: 1px solid var(--color-border-primary);
+        background: var(--color-bg-secondary);
+        border-radius: var(--radius-small);
+        margin-bottom: 0.5rem;
+        box-shadow: var(--shadow-main);
+    }
+    .project-entry:last-child {
+        border-bottom: none;
+    }
+    .project-entry:hover {
+        background-color: var(--color-bg-hover);
     }
 
-    .project-item:hover {
-        background-color: #f9f9f9;
+    .project-name-text {
+        color: var(--color-text-primary);
+        font-weight: 500;
     }
 
-    .action-btn {
+    .project-action-button {
         background: none;
         border: none;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+        line-height: 1;
         cursor: pointer;
-        color: #888;
+        color: var(--color-text-secondary);
+        padding: 0.25rem 0.5rem;
+        border-radius: var(--radius-small);
+    }
+    .project-action-button:hover {
+        color: var(--color-text-primary);
+        background-color: var(--color-bg-tertiary);
     }
 
-    .action-btn:hover {
-        color: #000;
+    .no-results-message {
+        text-align: center;
+        padding: 2rem;
+        color: var(--color-text-secondary);
+        font-style: italic;
     }
 </style>

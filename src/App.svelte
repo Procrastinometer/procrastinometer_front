@@ -22,19 +22,16 @@
     '/os': OS,
     '/year': Year,
     '/settings': Settings,
-
     '*': NotFound,
   };
 </script>
 
 <div class="layout">
-  <Sidebar/>
-
+  <Sidebar />
   <main class="main">
-    <Router {routes}/>
+    <Router {routes} />
   </main>
 </div>
-
 
 <style>
   .layout {

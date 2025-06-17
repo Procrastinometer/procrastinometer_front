@@ -2,49 +2,62 @@
     import { link } from 'svelte-spa-router';
 </script>
 
-<div class="not-found">
-    <h1 class="code">404</h1>
-    <p class="message">Oops! The page you're looking for doesn't exist.</p>
-    <a href="/dashboard" use:link class="back-home">← Go back to Dashboard</a>
+<div class="not-found-container">
+    <h1 class="error-code">404</h1>
+    <p class="error-message">Oops! The page you're looking for doesn't exist.</p>
+    <a href="/dashboard" use:link class="back-home-link">
+        <span class="arrow">←</span> Go back to Dashboard
+    </a>
 </div>
 
 <style>
-    .not-found {
+    .not-found-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 80vh;
+        min-height: calc(100vh - 4rem);
         text-align: center;
-        color: #333;
+        padding: 2rem;
+        color: var(--color-text-primary);
+        background-color: var(--color-bg-primary);
     }
 
-    .code {
-        font-size: 6rem;
+    .error-code {
+        font-size: clamp(4rem, 15vw, 8rem);
         font-weight: bold;
-        color: black;
-        margin: 0;
+        color: var(--color-text-primary);
+        margin: 0 0 0.5rem 0;
+        line-height: 1;
     }
 
-    .message {
-        font-size: 1.3rem;
-        margin-top: 0.5rem;
-        color: #666;
+    .error-message {
+        font-size: clamp(1.1rem, 3vw, 1.5rem);
+        margin-top: 0;
+        margin-bottom: 2.5rem;
+        color: var(--color-text-secondary);
+        max-width: 500px;
     }
 
-    .back-home {
-        margin-top: 2rem;
+    .back-home-link {
+        margin-top: 1rem;
         font-size: 1rem;
-        color: #1d4ed8;
+        color: var(--color-text-on-accent);
         text-decoration: none;
-        padding: 0.6rem 1.2rem;
-        background-color: #e0eefe;
-        border-radius: 8px;
-        transition: all 0.2s ease;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--color-accent-primary);
+        border-radius: var(--radius-main);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
-    .back-home:hover {
-        background-color: #dbeafe;
-        color: #0f3cd8;
+    .back-home-link:hover {
+        background-color: var(--color-accent-secondary);
+        opacity: 0.9;
+    }
+
+    .arrow {
+        font-size: 1.2em;
     }
 </style>
